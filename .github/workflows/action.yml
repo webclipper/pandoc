@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: azure/docker-login@v1
         with:
-          login-server: registry.cn-hongkong.aliyuncs.com
+          login-server: registry.us-east-1.aliyuncs.com
           username: ${{ secrets.CR_GITHUB_ACTION_PASSWORD }}
           password: ${{ secrets.CR_GITHUB_ACTION_PASSWORD }}
 
