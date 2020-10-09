@@ -1,9 +1,9 @@
-name: Actions Release
+name: Develop Push
 
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   build:
@@ -14,9 +14,9 @@ jobs:
       - uses: azure/docker-login@v1
         with:
           login-server: registry.us-east-1.aliyuncs.com
-          username: ${{ secrets.CR_GITHUB_ACTION_PASSWORD }}
+          username: ${{ secrets.CR_GITHUB_ACTION_USERNAME }}
           password: ${{ secrets.CR_GITHUB_ACTION_PASSWORD }}
 
       - run: |
-          docker build . -t registry.us-east-1.aliyuncs.com/github-action/pandoc:${{ github.sha }}
-          docker push registry.us-east-1.aliyuncs.com/github-action/pandoc:${{ github.sha }}
+          docker build . -t registry.us-east-1.aliyuncs.com/github-action/pandoc:develop
+          docker push registry.us-east-1.aliyuncs.com/github-action/pandoc:develop

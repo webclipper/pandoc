@@ -1,0 +1,24 @@
+name: Release Push
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Set env
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+      - uses: azure/docker-login@v1
+        with:
+          login-server: registry.us-east-1.aliyuncs.com
+          username: ${{ secrets.CR_GITHUB_ACTION_USERNAME }}
+          password: ${{ secrets.CR_GITHUB_ACTION_PASSWORD }}
+
+      - run: |
+          docker build . -t registry.us-east-1.aliyuncs.com/github-action/pandoc:${{ env.RELEASE_VERSION }}
+          docker push registry.us-east-1.aliyuncs.com/github-action/pandoc:${{ env.RELEASE_VERSION }}
